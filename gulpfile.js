@@ -29,21 +29,21 @@ server.get("/", function(req, res){
     res.render('index', data);
 });
 
+//using the main layout
 server.get("/hello", function(req,res){
     var data = {name : "abc"};
     res.render('hello', data);
 });
 
-//TODO : complete the client side handlebar rendering
 var handlebars = require('gulp-handlebars');
 var defineModule = require('gulp-define-module');
 
-//gulp.task('templates', function(){
-//    gulp.src(['templates/*.hbs'])
-//        .pipe(handlebars())
-//        .pipe(defineModule('node'))
-//        .pipe(gulp.dest('build/templates/'));
-//});
+gulp.task('templates', function(){
+    gulp.src(['templates/*.hbs'])
+        .pipe(handlebars({handlebars: require('handlebars')}))
+        .pipe(defineModule('node'))
+        .pipe(gulp.dest('build/templates/'));
+});
 
 //Task for sass using libsass through gulp-sass
 gulp.task('sass', function(){
@@ -60,27 +60,15 @@ gulp.task('browserify', function(){
         .pipe(concat('bundle.js'))
         .pipe(gulp.dest('build'))
         .pipe(refresh(lrserver));
-
 });
-
-//Task for moving html-files to the build-dir
-//added as a convenience to make sure this gulpfile works without much modification
-//gulp.task('html', function(){
-//    gulp.src('views/*.html')
-//        .pipe(gulp.dest('build'))
-//        .pipe(refresh(lrserver));
-//});
 
 //Convenience task for running a one-off build
 gulp.task('build', function() {
-    gulp.run('browserify', 'sass'/*,'templates'*/);
+    gulp.run('templates','browserify', 'sass');
 });
 
 gulp.task('serve', function() {
-    //Set up your static fileserver, which serves files in the build dir
     server.listen(serverport);
-
-    //Set up your livereload server
     lrserver.listen(livereloadport);
 });
 
