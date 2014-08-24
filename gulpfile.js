@@ -26,7 +26,7 @@ server.use(express.static('./build'));
 //TODO : move this to a new file
 server.get("/", function(req, res){
     var data = {name : "arvind", layout : false};
-    res.render('index', data);
+    res.render('home', data);
 });
 
 //using the main layout
