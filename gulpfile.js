@@ -10,6 +10,7 @@ var gulp = require('gulp'),
     livereload = require('connect-livereload')
     livereloadport = 35729,
     serverport = 5000;
+var rimraf = require('gulp-rimraf');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -70,8 +71,13 @@ gulp.task('browserify', function(){
         .pipe(refresh(lrserver));
 });
 
+gulp.task('clean', function() {
+    return gulp.src('./build', { read: false })
+        .pipe(rimraf());
+});
+
 //Convenience task for running a one-off build
-gulp.task('build', function() {
+gulp.task('build', ['clean'],  function() {
     gulp.run('templates','browserify', 'sass');
 });
 
