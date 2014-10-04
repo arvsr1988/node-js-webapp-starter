@@ -10,12 +10,20 @@ var gulp = require('gulp'),
     livereload = require('connect-livereload')
     livereloadport = 35729,
     serverport = 5000;
-
+var favicon = require('static-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 //We only configure the server here and start it only when running the watch task
 var server = express();
 var expressHbs = require('express-handlebars');
 server.engine('hbs', expressHbs({extname:'hbs', defaultLayout : 'main.hbs'}));
 server.set('view engine', 'hbs');
+server.use(favicon());
+server.use(logger('dev'));
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(cookieParser());
 
 //Add livereload middleware before static-middleware
 server.use(livereload({
