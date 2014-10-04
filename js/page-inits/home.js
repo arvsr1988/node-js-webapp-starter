@@ -1,4 +1,4 @@
-var homeTemplate = require('../../build/templates/home.js');
+var homeTemplate = require('../../dist/templates/home.js');
 
 module.exports = {
     init : function() {

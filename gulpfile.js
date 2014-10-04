@@ -30,7 +30,7 @@ server.use(cookieParser());
 server.use(livereload({
     port: livereloadport
 }));
-server.use(express.static('./build'));
+server.use(express.static('./dist/public'));
 
 //TODO : move this to a new file
 server.get("/", function(req, res){
@@ -44,6 +44,9 @@ server.get("/hello", function(req,res){
     res.render('hello', data);
 });
 
+var buildDir = 'dist';
+var publicDir = buildDir + '/public';
+
 var handlebars = require('gulp-handlebars');
 var defineModule = require('gulp-define-module');
 
@@ -51,14 +54,14 @@ gulp.task('templates', function(){
     gulp.src(['templates/*.hbs'])
         .pipe(handlebars({handlebars: require('handlebars')}))
         .pipe(defineModule('node'))
-        .pipe(gulp.dest('build/templates/'));
+        .pipe(gulp.dest('dist/templates/'));
 });
 
 //Task for sass using libsass through gulp-sass
 gulp.task('sass', function(){
     gulp.src('sass/*.scss')
         .pipe(sass())
-        .pipe(gulp.dest('build'))
+        .pipe(gulp.dest(publicDir))
         .pipe(refresh(lrserver));
 });
 
@@ -67,12 +70,12 @@ gulp.task('browserify', function(){
     gulp.src('js/*.js')
         .pipe(browserify())
         .pipe(concat('bundle.js'))
-        .pipe(gulp.dest('build'))
+        .pipe(gulp.dest(publicDir))
         .pipe(refresh(lrserver));
 });
 
 gulp.task('clean', function() {
-    return gulp.src('./build', { read: false })
+    return gulp.src('./' + buildDir, { read: false })
         .pipe(rimraf());
 });
 
@@ -101,5 +104,5 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', function () {
-    gulp.run('build', 'serve', 'watch');
+    gulp.run('build', 'serve','watch');
 });
