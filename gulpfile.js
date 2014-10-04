@@ -1,49 +1,8 @@
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
     browserify = require('gulp-browserify'),
-    concat = require('gulp-concat'),
-    //not sure if this is needed - hence commenting out.
-    //embedlr = require('gulp-embedlr'),
-    refresh = require('gulp-livereload'),
-    lrserver = require('tiny-lr')(),
-    express = require('express'),
-    livereload = require('connect-livereload')
-    livereloadport = 35729,
-    serverport = 5000;
+    concat = require('gulp-concat');
 var rimraf = require('gulp-rimraf');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-//We only configure the server here and start it only when running the watch task
-var server = express();
-var expressHbs = require('express-handlebars');
-server.engine('hbs', expressHbs({extname:'hbs', defaultLayout : 'main.hbs'}));
-server.set('view engine', 'hbs');
-server.use(favicon());
-server.use(logger('dev'));
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(cookieParser());
-
-//Add livereload middleware before static-middleware
-server.use(livereload({
-    port: livereloadport
-}));
-server.use(express.static('./dist/public'));
-
-//TODO : move this to a new file
-server.get("/", function(req, res){
-    var data = {name : "arvind", layout : false};
-    res.render('home', data);
-});
-
-//using the main layout
-server.get("/hello", function(req,res){
-    var data = {name : "abc"};
-    res.render('hello', data);
-});
-
 var buildDir = 'dist';
 var publicDir = buildDir + '/public';
 
@@ -61,8 +20,7 @@ gulp.task('templates', function(){
 gulp.task('sass', function(){
     gulp.src('sass/*.scss')
         .pipe(sass())
-        .pipe(gulp.dest(publicDir))
-        .pipe(refresh(lrserver));
+        .pipe(gulp.dest(publicDir));
 });
 
 //Task for processing js with browserify
@@ -70,8 +28,7 @@ gulp.task('browserify', function(){
     gulp.src('js/*.js')
         .pipe(browserify())
         .pipe(concat('bundle.js'))
-        .pipe(gulp.dest(publicDir))
-        .pipe(refresh(lrserver));
+        .pipe(gulp.dest(publicDir));
 });
 
 gulp.task('clean', function() {
@@ -81,12 +38,21 @@ gulp.task('clean', function() {
 
 //Convenience task for running a one-off build
 gulp.task('build', ['clean'],  function() {
-    gulp.run('templates','browserify', 'sass');
+    gulp.run('copy','templates','browserify', 'sass');
 });
 
-gulp.task('serve', function() {
-    server.listen(serverport);
-    lrserver.listen(livereloadport);
+var appDependencies = require('./package.json').dependencies;
+gulp.task('copy', function(){
+    gulp.src('app.js')
+        .pipe(gulp.dest(buildDir));
+    gulp.src('package.json')
+        .pipe(gulp.dest(buildDir));
+    for(var dependency in appDependencies){
+        gulp.src('node_modules/'+dependency + '/**/*')
+            .pipe(gulp.dest(buildDir+'/node_modules/' + dependency));
+    }
+    gulp.src('views/**/*')
+        .pipe(gulp.dest(buildDir+'/views'));
 });
 
 gulp.task('watch', function() {
@@ -94,7 +60,7 @@ gulp.task('watch', function() {
         gulp.run('sass');
     });
 
-    gulp.watch('js/*.js', function() {
+    gulp.watch('js/**/*.js', function() {
         gulp.run('browserify');
     });
 
@@ -104,5 +70,5 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', function () {
-    gulp.run('build', 'serve','watch');
+    gulp.run('build','watch');
 });
