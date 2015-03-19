@@ -11,7 +11,7 @@ gulp.task('sass', function(){
 });
 
 gulp.task('browserify', function(){
-    gulp.src('js/*.js')
+     gulp.src('js/*.js')
         .pipe(browserify({
             "transform": ["hbsfy"]
             }
@@ -41,9 +41,31 @@ gulp.task('clean', function() {
         .pipe(rimraf());
 });
 
+var rev = require("gulp-rev");
+var revReplace = require("gulp-rev-replace");
+gulp.task("revision", function(){
+    return gulp.src([publicDir + "/**/*.css", publicDir +  "/**/*.js"])
+        .pipe(rev())
+        .pipe(gulp.dest(publicDir))
+        .pipe(rev.manifest())
+        .pipe(gulp.dest(publicDir))
+});
+
+gulp.task("revreplace", ['revision'], function(){
+    var manifest = gulp.src(publicDir + "/rev-manifest.json");
+    return gulp.src(buildDir + "/views/**/*")
+        .pipe(revReplace({ manifest : manifest}))
+        .pipe(gulp.dest(buildDir + "/views/"));
+});
+
 //Convenience task for running a one-off build
 gulp.task('build', ['clean'],  function() {
     gulp.run('copy', 'browserify', 'sass');
+});
+
+//TODO : make this work properly
+gulp.task('prepareArtifact',['build'], function(){
+   gulp.trigger('revreplace');
 });
 
 gulp.task('watch', function() {
