@@ -20,6 +20,7 @@
     "gulp-sass": "~0.7.1",
     "gulp-util": "~2.2.14",
     "hbsfy": "^2.2.1",
+    "run-sequence": "^1.0.2",
     "tiny-lr": "0.0.7"
   },
   "dependencies": {

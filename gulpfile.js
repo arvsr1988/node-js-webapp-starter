@@ -2,16 +2,17 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     browserify = require('gulp-browserify'),
     concat = require('gulp-concat');
+var runSequence = require('run-sequence');
 var buildDir = 'dist';
 var publicDir = buildDir + '/public';
 gulp.task('sass', function(){
-    gulp.src('sass/*.scss')
+    return gulp.src('sass/*.scss')
         .pipe(sass())
         .pipe(gulp.dest(publicDir))
 });
 
 gulp.task('browserify', function(){
-     gulp.src('js/*.js')
+     return gulp.src('js/*.js')
         .pipe(browserify({
             "transform": ["hbsfy"]
             }
@@ -58,14 +59,8 @@ gulp.task("revreplace", ['revision'], function(){
         .pipe(gulp.dest(buildDir + "/views/"));
 });
 
-//Convenience task for running a one-off build
-gulp.task('build', ['clean'],  function() {
-    gulp.run('copy', 'browserify', 'sass');
-});
-
-//TODO : make this work properly
-gulp.task('prepareArtifact',['build'], function(){
-   gulp.trigger('revreplace');
+gulp.task('build',  function(callback) {
+    runSequence('clean', ['copy', 'browserify', 'sass'], 'revreplace', callback);
 });
 
 gulp.task('watch', function() {
