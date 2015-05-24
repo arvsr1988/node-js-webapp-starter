@@ -1,7 +1,13 @@
 {
   "name": "gup-from-scratch",
   "version": "0.0.1",
+  "browserify": {
+    "transform": [
+      "hbsfy"
+    ]
+  },
   "devDependencies": {
+    "browser-sync": "^2.7.4",
     "browserify": "~3.46.0",
     "connect-livereload": "~0.4.0",
     "gulp": "^3.8.6",
@@ -20,8 +26,12 @@
     "gulp-sass": "~0.7.1",
     "gulp-util": "~2.2.14",
     "hbsfy": "^2.2.1",
+    "lodash": "^3.9.1",
+    "merge-stream": "^0.1.7",
     "run-sequence": "^1.0.2",
-    "tiny-lr": "0.0.7"
+    "tiny-lr": "0.0.7",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.2.1"
   },
   "dependencies": {
     "body-parser": "^1.9.0",
