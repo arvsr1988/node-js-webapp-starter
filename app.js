@@ -20,7 +20,7 @@ app.set('port', process.env.PORT || '5000');
 
 //TODO : move this to a new file
 app.get("/", function(req, res){
-    var data = {name : "arvind", layout : false};
+    var data = {name : "arvind"};
     res.render('home', data);
 });
 

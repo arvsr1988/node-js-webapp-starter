@@ -50,7 +50,6 @@ var config       =
 var browserifyTask = function(devMode) {
 
     var browserifyThis = function(bundleConfig) {
-        console.log(devMode);
         if(devMode) {
             // Add watchify args and debug (sourcemaps) option
             _.extend(bundleConfig, watchify.args, { debug: true });

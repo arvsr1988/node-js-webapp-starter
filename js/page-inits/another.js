@@ -1,5 +1,9 @@
 var init = function(){
-    console.log("blah");
+    $(document).ready(function(){
+        console.log("from another.js");
+    })
 };
 
-exports.init = init;
+module.exports = {
+    init : init
+};
