@@ -7,10 +7,16 @@
     ]
   },
   "scripts": {
-    "browserify": "browserify -t hbsfy js/main.js -o public/bundle.js && browserify js/second.js -o public/second.js",
-    "sass" : "sass sass/main.scss > public/main.css",
-    "pre-start-dev" : "npm run browserify & npm run sass",
-    "start-dev" : "node app.js"
+    "browserify": "browserify -t hbsfy js/main.js -o public/bundle.js && browserify  -t hbsfy js/second.js -o public/second.js",
+    "sass": "sass sass/main.scss > public/main.css",
+    "build-dev": "npm run browserify & npm run sass",
+    "prestart-dev": "npm run build-dev",
+    "start-dev": "node app.js",
+    "clean-artifact": "node build/clean_artifact.js",
+    "copy-artifact-files": "node build/copy_files.js",
+    "uglify-js-files": "node build/uglify_js_files.js",
+    "precreate-artifact": "npm run clean-artifact & npm run build-dev",
+    "create-artifact": "npm run copy-artifact-files && npm run uglify-js-files"
   },
   "devDependencies": {
     "browser-sync": "^2.7.4",
@@ -47,7 +53,9 @@
     "express-handlebars": "1.0.1",
     "handlebars": "^4.0.5",
     "morgan": "^1.6.1",
-    "static-favicon": "^2.0.0-alpha"
+    "shelljs": "^0.6.0",
+    "static-favicon": "^2.0.0-alpha",
+    "uglify-js": "^2.6.1"
   },
   "engines": {
     "node": ">=0.10.0"
