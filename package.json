@@ -6,6 +6,12 @@
       "hbsfy"
     ]
   },
+  "scripts": {
+    "browserify": "browserify -t hbsfy js/main.js -o public/bundle.js && browserify js/second.js -o public/second.js",
+    "sass" : "sass sass/main.scss > public/main.css",
+    "pre-start-dev" : "npm run browserify & npm run sass",
+    "start-dev" : "node app.js"
+  },
   "devDependencies": {
     "browser-sync": "^2.7.4",
     "browserify": "~3.46.0",
@@ -29,6 +35,7 @@
     "lodash": "^3.9.1",
     "merge-stream": "^0.1.7",
     "run-sequence": "^1.0.2",
+    "sass": "^0.5.0",
     "tiny-lr": "0.0.7",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.2.1"
