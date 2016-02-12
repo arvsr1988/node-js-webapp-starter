@@ -1,11 +1,6 @@
 {
   "name": "gup-from-scratch",
   "version": "0.0.1",
-  "browserify": {
-    "transform": [
-      "hbsfy"
-    ]
-  },
   "scripts": {
     "browserify": "browserify -t hbsfy js/main.js -o public/bundle.js && browserify  -t hbsfy js/second.js -o public/second.js",
     "sass": "sass sass/main.scss > public/main.css",
