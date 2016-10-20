@@ -7,7 +7,7 @@
     "build-dev": "npm run compile-scripts & npm run sass",
     "prestart-dev": "npm run build-dev",
     "start-dev": "node app.js",
-    "watch" : "webpack --watch",
+    "watch": "webpack --watch",
     "clean-artifact": "node build/clean_artifact.js",
     "copy-artifact-files": "node build/copy_files.js",
     "precreate-artifact": "npm run clean-artifact & webpack --config=webpack.prod.config.js & npm run sass",
@@ -29,7 +29,8 @@
     "tiny-lr": "0.0.7",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.2.1",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "webpack-md5-hash": "0.0.5"
   },
   "dependencies": {
     "body-parser": "^1.9.0",

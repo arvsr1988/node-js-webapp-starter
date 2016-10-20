@@ -1,7 +1,10 @@
 let webpack = require('webpack');
 let initialConfig = require('./webpack.config');
+var WebpackMd5Hash = require('webpack-md5-hash');
+
 initialConfig.plugins = initialConfig.plugins || [];
 initialConfig.plugins = initialConfig.plugins.concat([
+  new WebpackMd5Hash(),
   new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$")),
   new webpack.DefinePlugin({
     'process.env': {
