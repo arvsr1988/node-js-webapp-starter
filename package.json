@@ -10,9 +10,8 @@
     "watch" : "webpack --watch",
     "clean-artifact": "node build/clean_artifact.js",
     "copy-artifact-files": "node build/copy_files.js",
-    "uglify-js-files": "node build/uglify_js_files.js",
-    "precreate-artifact": "npm run clean-artifact & npm run build-dev",
-    "create-artifact": "npm run copy-artifact-files && npm run uglify-js-files && gulp revreplace"
+    "precreate-artifact": "npm run clean-artifact & webpack --config=webpack.prod.config.js & npm run sass",
+    "create-artifact": "npm run copy-artifact-files && gulp revreplace"
   },
   "devDependencies": {
     "browser-sync": "^2.7.4",
@@ -40,8 +39,7 @@
     "handlebars": "^4.0.5",
     "morgan": "^1.6.1",
     "shelljs": "^0.6.0",
-    "static-favicon": "^2.0.0-alpha",
-    "uglify-js": "^2.6.1"
+    "static-favicon": "^2.0.0-alpha"
   },
   "engines": {
     "node": ">=0.10.0"
