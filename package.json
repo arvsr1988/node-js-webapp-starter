@@ -1,19 +1,22 @@
 {
-  "name": "gup-from-scratch",
+  "name": "gulp-from-scratch",
   "version": "0.0.1",
   "scripts": {
-    "compile-scripts": "webpack",
+    "compile-scripts": "webpack --config webpack/config/webpack.config.js",
     "sass": "sass sass/main.scss > public/main.css",
-    "build-dev": "npm run compile-scripts & npm run sass",
+    "build-dev": "npm run compile-scripts && npm run sass",
     "prestart-dev": "npm run build-dev",
     "start-dev": "node app.js",
     "watch": "webpack --watch",
     "clean-artifact": "node build/clean_artifact.js",
     "copy-artifact-files": "node build/copy_files.js",
-    "precreate-artifact": "npm run clean-artifact & webpack --config=webpack.prod.config.js & npm run sass",
+    "precreate-artifact": "npm run clean-artifact & webpack --config=webpack/config/webpack.prod.config.js && npm run sass",
     "create-artifact": "npm run copy-artifact-files && gulp revreplace"
   },
   "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.4.0",
     "browser-sync": "^2.7.4",
     "connect-livereload": "~0.4.0",
     "gulp": "^3.8.6",
@@ -29,7 +32,7 @@
     "tiny-lr": "0.0.7",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.2.1",
-    "webpack": "^1.13.2",
+    "webpack": "^2.5.1",
     "webpack-md5-hash": "0.0.5"
   },
   "dependencies": {
@@ -43,6 +46,6 @@
     "static-favicon": "^2.0.0-alpha"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=6.0.0"
   }
 }

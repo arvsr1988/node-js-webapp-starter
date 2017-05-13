@@ -1,5 +1,5 @@
 let webpack = require('webpack');
-let initialConfig = require('./webpack.config');
+let initialConfig = require('./common.js');
 var WebpackMd5Hash = require('webpack-md5-hash');
 
 initialConfig.plugins = initialConfig.plugins || [];
