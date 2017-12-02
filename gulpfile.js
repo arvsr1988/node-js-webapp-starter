@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var runSequence = require('run-sequence');
 var rev = require("gulp-rev");
 var revReplace = require("gulp-rev-replace");
 
