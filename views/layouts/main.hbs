@@ -1,8 +1,12 @@
 <html>
 <head>
-    {{> assets}}
+  {{> assets}}
+  <script>window.todos = {{{toJSON todos}}}</script>
 </head>
-<body>
-{{{body}}}
+<body style="padding: 20px;">
+  <h1>Your To Do List</h1>
+  <div id="container">
+    {{{body}}}
+  </div>
 </body>
 </html>

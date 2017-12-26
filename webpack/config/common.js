@@ -3,7 +3,6 @@ const rootDir = path.resolve('./');
 module.exports = {
   entry: {
     bundle: rootDir + '/js/main.js',
-    second: rootDir + '/js/second.js'
   },
   output: {
     filename: '[name].js',

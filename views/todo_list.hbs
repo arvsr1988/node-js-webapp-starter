@@ -1,0 +1,15 @@
+<ul>
+{{#each todos}}
+  <li style="list-style-type: none; font-size : 14pt;">
+    <input name="id" value="{{id}}" type="checkbox" {{#if done}}checked{{/if}} />&nbsp;
+    {{#if done}}<del>{{/if}}
+      {{description}}
+    {{#if done}}</del>{{/if}}
+  </li>
+{{/each}}
+<!-- <li style="list-style-type: none;">
+  <a data-internal="true" href="/todo/add" data-internal="true">
+    <button>Add a todo</button>
+  </a>
+</li> -->
+</ul>

@@ -12,22 +12,28 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.engine('hbs', expressHbs({extname:'hbs', defaultLayout : 'main.hbs'}));
+//todo - the helpers should be in a common place
+app.engine('hbs', expressHbs({
+    extname:'hbs',
+    defaultLayout : 'main.hbs',
+    helpers: {
+      toJSON : JSON.stringify
+    }
+  }
+));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('port', process.env.PORT || '5000');
 
-//TODO : move this to a new file
-app.get("/", function(req, res){
-    var data = {name : "arvind"};
-    res.render('home', data);
-});
+const todos = [
+  {id: 1, done: false, description: 'Buy Groceries'},
+  {id: 2, done: true, description: 'Pay Telephone Bill'},
+  {id: 3, done: false, description: 'Book movie tickets'},
+]
 
-//using the main layout
-app.get("/hello", function(req,res){
-    var data = {name : "abc"};
-    res.render('hello', data);
+app.get("/", function(req, res){
+  res.render('todo_list', {todos});
 });
 
 module.exports = app;
