@@ -41,11 +41,15 @@ app.get('/todo/add', (req, res) => {
 });
 
 app.post('/todo', (req, res) => {
-  console.log("Adding todo ", req.body);
   const newTodo = {id: todos[todos.length -1].id + 1, done: false, description: req.body.description};
   todos.push(newTodo);
-  console.log("updated todos ", todos);
   res.json(newTodo);
+});
+
+app.put('/todo', (req, res) => {
+  const {id, done} = req.body;
+  todos.find(todo => todo.id == req.body.id).done = req.body.done;
+  res.status(200).send();
 })
 
 module.exports = app;

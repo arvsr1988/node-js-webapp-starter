@@ -22,6 +22,20 @@ const changeRoute = function(event, path){
 const routeHandler = {
   '/' : () => {
     updateView(todoListTemplate({todos: window.todos}));
+    $("input[name='id']").change((ev) => {
+      const {value, checked } = ev.target;
+      fetch('/todo', {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({id: value, done: checked})
+      }).then(resp => {
+        window.todos.find(todo => todo.id == value).done = checked;
+        changeRoute({}, '/');
+      });
+    })
   },
   '/todo/add': () => {
     updateView(addTodoTemplate());
