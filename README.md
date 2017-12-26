@@ -1,18 +1,28 @@
-# Express JS Starter app
+# Node JS starter web application
 
-Webapp based on Node/Express JS with a vanilla js frontend. Webpack is used for asset compilation
+A todo web application built.
+
+## Features incorporated
+* Client side routing and rendering using window.history.popState
+* Server side routing and rendering
+* Reuse of templates/views on client and server side
+* Creation of artifact that will append a hash to the javascript filename
+
+## Tech Stack
+* Node/Express JS
+* handlebars
+* Webpack
+* Gulp for bursting cache of javascript using file content hash (this should be replaced with webpack)
 
 ## For Development
 
-To start dev environment run
+To start the dev environment run
 
 `npm run start-dev`
 
 and go to http://localhost:5000/
 
-To watch javascript run
-
-`npm run watch`
+In dev mode, watch is enabled for both the client side and the server side.
 
 ## To create an artifact
 
