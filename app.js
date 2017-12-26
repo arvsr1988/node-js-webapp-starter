@@ -36,8 +36,20 @@ app.get("/", function(req, res){
   res.render('todo_list', {todos});
 });
 
+app.get('/todo/add', (req, res) => {
+  res.render("add_todo", {todos})
+});
+
+app.post('/todo', (req, res) => {
+  console.log("Adding todo ", req.body);
+  const newTodo = {id: todos[todos.length -1].id + 1, done: false, description: req.body.description};
+  todos.push(newTodo);
+  console.log("updated todos ", todos);
+  res.json(newTodo);
+})
+
 module.exports = app;
 var server = http.createServer(app);
 server.listen(app.get('port'), function () {
-    console.log('Express server listening on port ' + app.get('port'));
+  console.log('Express server listening on port ' + app.get('port'));
 });

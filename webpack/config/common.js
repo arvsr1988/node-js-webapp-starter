@@ -26,7 +26,15 @@ module.exports = {
         }
       }
     },
-    { test: /\.hbs/, loader: "handlebars-template-loader" },
+    {
+       test: /\.hbs/,
+       loader: "handlebars-loader",
+       query: {
+       partialDirs: [
+          path.join(rootDir, 'views', 'partials')
+        ]
+      }
+     },
     ]
   },
 };
