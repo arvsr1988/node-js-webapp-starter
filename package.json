@@ -51,6 +51,6 @@
     "static-favicon": "^2.0.0-alpha"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.9.0"
   }
 }
