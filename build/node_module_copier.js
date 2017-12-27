@@ -19,7 +19,6 @@ function copyDeps(packageFile, deployDir){
     const deployDirectory = `${deployDir}/node_modules/`;
     shell.mkdir('-p', deployDirectory);
     shell.cp('-rf', moduleDirectory, deployDirectory);
-    console.log("copied and processing deps for ", dep);
     copyDeps(`${moduleDirectory}/package.json`, deployDir);
   }
 }

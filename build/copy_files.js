@@ -9,4 +9,6 @@ NodeModuleCopier.copy('dist');
    shell.cp('-rf', directory, artifactDir + directory);
 });
 
-shell.cp('app.js', artifactDir);
+['app.js','package.json'].forEach( file => {
+  shell.cp(file, artifactDir)
+});
