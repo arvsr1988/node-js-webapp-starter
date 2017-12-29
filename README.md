@@ -1,6 +1,9 @@
 # Node JS starter web application
 
-A todo web application built.
+A todo web application built on the following principles (mainly inspired from the react, redux architecture)
+* Allowing client side and server side routing for the same set of routes.
+* Reusable views between client and server side
+* using a common state on the client side in order to read off one place (see `window.todos` in the code) .
 
 ## Features incorporated
 * Client side routing and rendering using window.history.popState
