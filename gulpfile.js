@@ -14,9 +14,9 @@ gulp.task("revision", function(){
         .pipe(gulp.dest(publicDir))
 });
 
-gulp.task("revreplace", ['revision'], function(){
+gulp.task("revreplace", gulp.series('revision', () => {
     var manifest = gulp.src(publicDir + "/rev-manifest.json");
     return gulp.src(buildDir + "/views/**/*")
         .pipe(revReplace({ manifest : manifest}))
         .pipe(gulp.dest(buildDir + "/views/"));
-});
+}));
